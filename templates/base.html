@@ -22,6 +22,7 @@
         <header id="header">
             <h1><a href="{% url 'homepage' %}">Home</a></h1>
             <nav class="links">
+
                 {% for category in categories %}
                     <span><a href="{% url 'category' category.slug %}">{{ category }}</a></span>
                 {% endfor %}
@@ -45,6 +46,7 @@
                 {% else %}
                     <span><a href="{% url 'logout' %}"><i class="fas fa-user-times"></i></a></span>
                 {% endif %}
+
             </nav>
 
 <!--Menu-->
@@ -149,3 +151,6 @@
 			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
 			<script src="{% static 'assets/js/util.js' %}"></script>
 			<script src="{% static 'assets/js/main.js' %}"></script>
+
+    </body>
+</html>

@@ -1,7 +1,8 @@
+
+from django.shortcuts import redirect, render, get_object_or_404
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
 from main.models import Comment
-from .forms import CommentForm
+from .forms import AddPostForm, CommentForm
 from django.views.generic import ListView, DetailView
 from main.models import Category, Post
 
@@ -49,6 +50,28 @@ class CategoryDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['posts'] = Post.objects.filter(category_id=self.slug)
         return context
+
+
+
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    image = post.get_image
+    images = post.posts.exclude(image=image)
+    return render(request, 'post-detail.html', locals())
+
+
+
+def add_post(request):
+    if request.method == 'POST':
+        post_form = AddPostForm(request.POST)
+        if post_form.is_valid():
+            post = post_form.save()
+            return redirect(post.get_absolute_url())
+
+    else:
+        post_form = AddPostForm()
+    return render(request, 'add_post.html ', locals())
 
 
 # comments
