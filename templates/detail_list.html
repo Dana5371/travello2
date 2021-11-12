@@ -79,7 +79,7 @@
 		<!-- Mini Post -->
 			<article class="mini-post" style="margin-top: auto; margin-bottom: auto;">
 				<header>
-					<h3><a href="">{{ post.title }}</a></h3>
+					<h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
 					<p>{{ post.description|truncatewords:10 }}</p>
 
 					<time class="published" datetime="2015-10-20">{{ post.create }}</time>

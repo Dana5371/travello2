@@ -37,6 +37,10 @@ class Post(models.Model):
     def get_image(self):
         return self.posts.first()
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('post-detail', kwargs={'pk': self.pk})
+
 
 class Image(models.Model):
     image = models.ImageField(upload_to='posts')
