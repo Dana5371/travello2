@@ -56,4 +56,4 @@ class Comment(models.Model):
     moderator = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'Комментарий {self.user} {self.post}'
+        return f'{self.user} {self.post}'

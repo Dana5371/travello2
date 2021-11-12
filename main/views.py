@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from main.models import Comment
 from .forms import CommentForm
@@ -11,6 +12,27 @@ class HomePageView(ListView):
     model = Post
     template_name = 'index.html'
     context_object_name = 'posts'
+
+    def get_template_names(self):
+        template_name = super(HomePageView, self).get_template_names()
+        search = self.request.GET.get('query')
+        if search:
+            template_name = 'search.html'
+        return template_name
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search = self.request.GET.get('query')
+        if search:
+            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
+                                                   Q(description__icontains=search)|
+                                                   Q(user__icontains=search))
+        else:
+            context['posts'] = Post.objects.all()
+        return context
+
+
 
 
 class CategoryDetailView(DetailView):

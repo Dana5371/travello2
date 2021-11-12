@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% for post in posts %}
+<li>
+    <a href="#" class="image"><img src="{{ post.get_image }}" style="width: 200px; height: 200 px;" alt=""/></a>
+    <h2>{{ post }}</h2>
+    <p>{{ post.description|truncatewords: 50 }}</p>
+    <ul class="actions">
+        <li><a href="{% url 'detail' post.id %}" class="button">Post</a></li>
+    </ul>
+
+    </a>
+</li>
+{% endfor %}
+{% endblock %}
