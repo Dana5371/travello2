@@ -8,9 +8,14 @@
 					{% if category.name %}
 				  <img style="width: auto; height: 800px;" src="{{ category.image.url }}" class="card-img" alt="...">
 					{% endif %}
-				  <div class="card-img-overlay">
-					  <h5 class="card-title" style="font-size: 40px; color: white;"><a href="">{{ category.name }}</a></h5>
 					
+				  <div class="card-img-overlay">
+					  <h5 class="card-title" style="font-size: 40px; color: white;">{{ category.name }}</h5>
+					  {% if category.get_children %}
+					  {% for child in category.get_children %}
+					  <a style="color: blue;" href="{% url 'category' child.slug %}"><h2 style="color: white;">{{ child.name }}</h2></a>
+					  {% endfor %}
+                   {% endif %}
 				
 				  </div>
 				</div>
@@ -21,11 +26,11 @@
 						<div id="main">
 
 							<!-- Post -->
-<!--								<article class="post">-->
-<!--									<header>-->
-<!--										<div class="title">-->
-<!--											<h2><a href="#">{{ category }}</a></h2>-->
-<!--										</div>-->
+								<!-- <article class="post">
+									<header>
+										<div class="title">
+											<h2><a href="#">{{ category }}</a></h2>
+										</div>  -->
 <!--										<div class="meta">-->
 
 	<!--										<time class="published" datetime="2015-11-01">November 1, 2015</time>-->
@@ -49,20 +54,48 @@
 						</div>
 
 				<div class="row row-cols-1 row-cols-md-3 g-4">
-					{% if category.get_children %}
+					{% if not category.get_children %}
                     {% for child in category.get_children %}
               <div class="col" id="">
                 <div class="card">
                   <img src="{{ child.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
-					  <a href="{% url 'category' child.slug %}"><h5 class="card-title">{{ child.name }}</h5></a>
+					  <a href="{% url 'category' category.slug %}"><h5 class="card-title">{{ child.name }}</h5></a>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   </div>
                 </div>
 				  {% endfor %}
                    {% endif %}
 				  </div>
+				  <br>
 
+
+
+<!-- Mini Posts -->
+<section>
+	<div class="mini-posts" >
+		{% if not category.get_children %}
+		{% for post in posts %}
+		<!-- Mini Post -->
+			<article class="mini-post" style="margin-top: auto; margin-bottom: auto;">
+				<header>
+					<h3><a href="">{{ post.title }}</a></h3>
+					<p>{{ post.description|truncatewords:10 }}</p>
+
+					<time class="published" datetime="2015-10-20">{{ post.create }}</time>
+					<a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>
+				</header>
+				<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
+			</article>
+			{% endfor %}
+			{% endif %}
+
+	
+		
+		
+
+	</div>
+</section>
 
 
 
