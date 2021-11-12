@@ -21,6 +21,8 @@ class Category(models.Model):
         return False
 
 
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -32,9 +34,18 @@ class Post(models.Model):
         return self.title
 
 
+    def get_image(self):
+        return self.posts.first()
+
+
 class Image(models.Model):
     image = models.ImageField(upload_to='posts')
     posts = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='posts')
+
+    def __str__(self):
+        return self.image.url
+
+
 
 
 class Comment(models.Model):
