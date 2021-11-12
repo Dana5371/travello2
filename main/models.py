@@ -1,8 +1,5 @@
 from django.db import models
 
-# Create your models here.
-from django.db import models
-
 from account.models import User
 
 
@@ -23,6 +20,7 @@ class Category(models.Model):
             return self.children.all()
         return False
 
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -33,7 +31,18 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
 class Image(models.Model):
     image = models.ImageField(upload_to='posts')
     posts = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='posts')
-        
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    comment = models.TextField()
+    created = models.DateTimeField()
+    moderator = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Комментарий {self.user} {self.post}'

@@ -5,7 +5,9 @@
 
 
 				<div class="card bg-dark text-white">
+					{% if category.name %}
 				  <img style="width: auto; height: 800px;" src="{{ category.image.url }}" class="card-img" alt="...">
+					{% endif %}
 				  <div class="card-img-overlay">
 					  <h5 class="card-title" style="font-size: 40px; color: white;"><a href="">{{ category.name }}</a></h5>
 					
