@@ -5,6 +5,8 @@
     {% csrf_token %}
 
     <input class="btn btn-primary" type="submit" value="Yes">
+    <a class="btn" href="{% url 'homepage' %}" role="button">No</a>
+
 </form>
 
-{% endblock %} 
+{% endblock %}

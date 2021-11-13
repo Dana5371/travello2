@@ -8,7 +8,7 @@
 					<!-- Main -->
 						<div id="main">
 							<a href="{% url 'update-post' post.id %}"><i class="far fa-edit"></i></a>
-						<a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
+							<a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
 							<!-- Post -->
 								<!-- <article class="post">
 									<header>
@@ -20,11 +20,10 @@
 
 							<!-- Post -->
 								<article class="post">
-									
 									<header>
 										<div class="title">
 											<h2>{{ post.title }}</h2>
-										</div>  
+										</div>
 										<div class="meta">
 
 											<p>{{ post.created }}</p>
@@ -34,7 +33,7 @@
 
 									<span class="image featured"><img style="width: auto; height: 800px;" src="{{ post.get_image }}" alt="" /></span>
 
-									
+
 									<p>{{ post.description }}</p>
                                     {% for image in images %}
                                     <img src="{{ image  }}" class="img-thumbnail" alt="...">
@@ -46,7 +45,7 @@
 											<li><a href="#" class="icon solid fa-comment">128</a></li>
 										</ul>
 									</footer>
-								</article> 
+								</article>
 
 						</div>
 
@@ -87,10 +86,9 @@
 			{% endfor %}
 			{% endif %}
 
-			
-	
-		
-		
+
+
+
 
 	</div>
 </section>

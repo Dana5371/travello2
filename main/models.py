@@ -23,6 +23,8 @@ class Category(models.Model):
 
 
 
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -46,11 +48,11 @@ class Image(models.Model):
     image = models.ImageField(upload_to='posts')
     posts = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='posts')
 
+
     def __str__(self):
         if self.image:
             return self.image.url
         return ''
-
 
 
 

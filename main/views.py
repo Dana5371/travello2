@@ -1,14 +1,16 @@
-
-
 from django.db.models import Q
-from django.db.models.query import QuerySet
-from django.forms.models import modelform_factory, modelformset_factory
+from django.forms.models import modelformset_factory
+from django.http import request
 from django.shortcuts import redirect, render, get_object_or_404
 from main.models import Comment, Image
 from .forms import AddPostForm, CommentForm, ImageForm
 from django.views.generic import ListView, DetailView
 from main.models import Category, Post
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+
+
 
 # Create your views here.
 
@@ -25,19 +27,16 @@ class HomePageView(ListView):
             template_name = 'search.html'
         return template_name
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get('query')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
-                                                   Q(description__icontains=search)|
-                                                   Q(user__icontains=search))
+            context['posts'] = Post.objects.filter(Q(title__icontains=search) |
+                                                   Q(description__icontains=search))
         else:
             context['posts'] = Post.objects.all()
+
         return context
-
-
 
 
 class CategoryDetailView(DetailView):
@@ -56,8 +55,6 @@ class CategoryDetailView(DetailView):
         return context
 
 
-
-
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     image = post.get_image
@@ -66,6 +63,7 @@ def post_detail(request, pk):
 
 
 
+@login_required(login_url='login')
 def add_post(request):
     ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=5, extra=3)
     if request.method == 'POST':
@@ -87,30 +85,30 @@ def add_post(request):
 
 def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=5)
-    post_form = AddPostForm(request.POST or None, instance=post)
-    formset = ImageFormSet(request.POST or None, request.FILES or None, queryset=Image.objects.filter(posts=post))
-    if post_form.is_valid() and formset.is_valid():
-        post = post_form.save()
+    if request.user == post.user:
+        ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=5)
+        post_form = AddPostForm(request.POST or None, instance=post)
+        formset = ImageFormSet(request.POST or None, request.FILES or None, queryset=Image.objects.filter(posts=post))
+        if post_form.is_valid() and formset.is_valid():
+            post = post_form.save()
 
-        for form in formset:
-            image = form.save(commit=False)
-            image.posts = post
-            image.save()
-        return redirect(post.get_absolute_url())    
-    return render(request, 'update-post.html', locals())
-
+            for form in formset:
+                image = form.save(commit=False)
+                image.posts = post
+                image.save()
+            return redirect(post.get_absolute_url())
+        return render(request, 'update-post.html', locals())
+    else:
+        return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
 
 
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request == 'POST':
         post.delete()
-        return redirect('homepage')
         messages.add_message(request, messages.SUCCESS, 'You delete your blog')
+        return redirect('homepage')
     return render(request, 'delete-post.html')
-
-    
 
 
 # comments
