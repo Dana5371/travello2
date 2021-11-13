@@ -78,45 +78,53 @@
 <!--							</article>-->
 
 						<!-- Post -->
-						{% for post in posts %}
-							<article class="post">
+						{% for post in page_obj %}
+						<article class="post">
 
-								<header>
+							<header>
 
-									<div class="title">
-										<h2><a href="">{{ post.title }}</a></h2>
-									</div>
-									<div class="meta">
-										<p>{{ post.created }}</p>
-										{% if post.user %}
-										<a href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
+								<div class="title">
+									<h2><a href="">{{ post.title }}</a></h2>
+								</div>
+								<div class="meta">
+
+
+
+									<p>{{ post.created }}</p>
+									{% if post.user %}
+									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
 									{% endif %}
-									</div>
-								</header>
-								{% if post.get_image %}
-								<a href="single.html" class="image featured"><img style="width: 550px; height: 650px;" src="{{ post.get_image }}" alt="" /></a>
-								{% endif %}
-								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Cras vehicula tellus eu ligula viverra, ac fringilla turpis suscipit. Quisque vestibulum rhoncus ligula.</p>
-								<footer>
-									<ul class="actions">
-										<li><a href="single.html" class="button large">Continue Reading</a></li>
-									</ul>
-									<ul class="stats">
-										<li><a href="#">General</a></li>
-										<li><a href="#" class="icon solid fa-heart">28</a></li>
-										<li><a href="#" class="icon solid fa-comment">128</a></li>
-									</ul>
-								</footer>
 
-							</article>
+								</div>
+							</header>
+							{% if post.get_image %}
+							<a href="single.html" class="image featured"><img style="width: 550px; height: 650px;" src="{{ post.get_image }}" alt="" /></a>
+							{% endif %}
+							<p>{{ post.description|truncatewords:25 }}</p>
+							<footer>
+								<ul class="actions">
+									<li><a href="single.html" class="button large">Continue Reading</a></li>
+								</ul>
+								<ul class="stats">
+									<li><a href="#">General</a></li>
+									<li><a href="#" class="icon solid fa-heart">28</a></li>
+									<li><a href="#" class="icon solid fa-comment">128</a></li>
+								</ul>
+							</footer>
+
+						</article>
 						{% endfor %}
 
 
 
 						<!-- Pagination -->
 							<ul class="actions pagination">
-								<li><a href="" class="disabled button large previous">Previous Page</a></li>
-								<li><a href="#" class="button large next">Next Page</a></li>
+								{% if page_obj.has_previous %}
+								<li><a href="{% url 'homepage' %}?page={{ page_obj.previous_page_number }}" class="button large previous">{{ page_obj.previous_page_number }}</a></li>
+								{% endif %}
+								{% if page_obj.has_next %}
+								<li><a href="{% url 'homepage' %}?page={{ page_obj.next_page_number }}" class="button large next">{{ page_obj.next_page_number }}</a></li>
+								{% endif %}
 							</ul>
 
 					</div>
