@@ -19,7 +19,6 @@
             <nav class="links">
                 <ul>
                     <li><a href="{% url 'add-post' %}">Add post</a></li>
-
                 </ul>
             </nav>
             <nav class="links">
@@ -80,6 +79,11 @@
                         </a>
                     </li>
                     {% endfor %}
+                      <li>
+                        <a href="{% url 'homepage' %}?filter=new">
+                            <h3>New Posts</h3>
+                        </a>
+                    </li>
 
                 </ul>
             </section>
