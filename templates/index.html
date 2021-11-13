@@ -80,21 +80,15 @@
 						<!-- Post -->
 						{% for post in posts %}
 							<article class="post">
-
 								<header>
-
 									<div class="title">
 										<h2><a href="">{{ post.title }}</a></h2>
 									</div>
 									<div class="meta">
-
-
-
 										<p>{{ post.created }}</p>
 										{% if post.user %}
 										<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
 									{% endif %}
-
 									</div>
 								</header>
 								{% if post.get_image %}
@@ -111,7 +105,6 @@
 										<li><a href="#" class="icon solid fa-comment">128</a></li>
 									</ul>
 								</footer>
-
 							</article>
 						{% endfor %}
 
