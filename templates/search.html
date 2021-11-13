@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="mini-posts" >
-	{% for post in posts %}
-	<article class="mini-post" style="margin-top: auto; margin-bottom: auto;">
-		<header>
-			<h3><a href="{% url 'post-detail' post.id %}">{{ post }}</a></h3>
-			<p>{{ post.description|truncatewords:10 }}</p>
-			<a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>
-		</header>
-		<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
-	</article>
-	{% endfor %}
-</div>
+
+
+
+
+
+<h1>Search results: </h1>
+{% for post in posts %}
+
+
+    <h2>{{ post }}</h2>
+    <p>{{ post.description|truncatewords:50 }}</p>
+<a href="#" class="image"><img src="{{ post.get_image }}" style="width: 200px; height: 200 px;" alt=""/></a>
+    <ul class="actions">
+        <li><a href="{% url 'post-detail' post.id %}" class="button">Post</a></li>
+    </ul>
+
+    </a>
+
+{% endfor %}
+
 {% endblock %}
+
