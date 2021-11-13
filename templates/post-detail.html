@@ -31,12 +31,12 @@
 										</div>
 									</header>
 
-									<span class="image featured"><img style="width: auto; height: 800px;" src="{{ post.get_image }}" alt="" /></span>
+									<span class="image featured"><img style="width: 550px; height: 600px;" src="{{ post.get_image }}" alt="" /></span>
 
 
 									<p>{{ post.description }}</p>
                                     {% for image in images %}
-                                    <img src="{{ image  }}" class="img-thumbnail" alt="...">
+                                    <img style="width: 550px; height: 600px;" src="{{ image  }}" class="img-thumbnail" alt="...">
                                     {% endfor %}
 									<!-- <footer>
 										<ul class="stats">
@@ -79,7 +79,7 @@
 					<p>{{ post.description|truncatewords:10 }}</p>
 
 					<time class="published" datetime="2015-10-20">{{ post.create }}</time>
-					<a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>
+					<a href="#" class="author"><img style="width: 250px; :" src="{{ post.get_image }}" alt="" /></a>
 				</header>
 				<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
 			</article>

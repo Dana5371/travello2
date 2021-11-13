@@ -10,7 +10,7 @@
 	{% if messages %}
 								<ul class="messages">
     							{% for message in messages %}
-    							<p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+    							<div class="alert alert-warning" role="alert">{{ message }}</div>
     								{% endfor %}
 								</ul>
 								{% endif %}
@@ -83,20 +83,21 @@
 
 							<header>
 
+
 								<div class="title">
 									<h2><a href="">{{ post.title }}</a></h2>
 								</div>
 								<div class="meta">
-
-
-
 									<p>{{ post.created }}</p>
 									{% if post.user %}
 									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
 									{% endif %}
-
 								</div>
+
+
 							</header>
+
+
 							{% if post.get_image %}
 							<a href="single.html" class="image featured"><img style="width: 550px; height: 650px;" src="{{ post.get_image }}" alt="" /></a>
 							{% endif %}
@@ -113,6 +114,8 @@
 							</footer>
 
 						</article>
+
+
 						{% endfor %}
 
 
