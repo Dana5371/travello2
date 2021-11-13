@@ -23,6 +23,7 @@ class HomePageView(ListView):
     model = Post
     template_name = 'index.html'
     context_object_name = 'posts'
+    paginate_by = 3
 
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
