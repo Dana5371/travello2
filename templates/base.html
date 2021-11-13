@@ -34,17 +34,19 @@
             </nav>
             <nav class="links">
                 {% if request.user.is_authenticated %}
-                    <span><a href="{% url 'profile' %}"><i class="far fa-address-card"></i></a></span>
+                    <span><a href="{% url 'profile' %}"><i class="far fa-address-card"> profile</i></a></span>
                 {% endif %}
             </nav>
             <nav class="links">
                   {% if not request.user.is_authenticated %}
-                    <span><a href="{% url 'register' %}"><i class="fas fa-user"></i></a></span>
-                    <span><a href="{% url 'login' %}"><i class="fas fa-user-check"></i></a></span>
+                    <span><a href="{% url 'register' %}"><i class="fas fa-user-edit"></i> registration</a></span>
+            </nav>
+            <nav class="links">
+                    <span><a href="{% url 'login' %}"><i class="fas fa-user-check"> sign in</i></a></span>
             </nav>
             <nav class="links">
                 {% else %}
-                    <span><a href="{% url 'logout' %}"><i class="fas fa-user-times"></i></a></span>
+                    <span><a href="{% url 'logout' %}"><i class="fas fa-user-times"> sign out</i></a></span>
                 {% endif %}
 
             </nav>

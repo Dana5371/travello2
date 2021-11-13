@@ -21,14 +21,11 @@ class HomePageView(ListView):
             template_name = 'search.html'
         return template_name
 
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get('query')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
-                                                   Q(description__icontains=search)|
-                                                   Q(user__icontains=search))
+            context['posts'] = Post.objects.filter(Q(title__icontains=search)|Q(description__icontains=search))
         else:
             context['posts'] = Post.objects.all()
         return context
