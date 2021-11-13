@@ -4,7 +4,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView
-
 from account.forms import RegistrationForm
 from account.models import User
 
@@ -21,10 +20,6 @@ class SignInView(LoginView):
     template_name = 'account/login.html'
     success_url = reverse_lazy('homepage')
 
-
-# class ProfileView(DetailView):
-#     model = User
-#     template_name = 'account/profile.html'
 
 def profile(request):
     return render(request, 'account/profile.html')
