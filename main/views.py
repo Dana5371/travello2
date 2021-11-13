@@ -1,7 +1,11 @@
+from datetime import timedelta
+
 from django.db.models import Q
 from django.forms.models import modelformset_factory
 from django.http import request
 from django.shortcuts import redirect, render, get_object_or_404
+from django.utils import timezone
+
 from main.models import Comment, Image
 from .forms import AddPostForm, CommentForm, ImageForm
 from django.views.generic import ListView, DetailView
@@ -30,9 +34,13 @@ class HomePageView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get('query')
+        filter = self.request.GET.get('filter')
         if search:
             context['posts'] = Post.objects.filter(Q(title__icontains=search) |
                                                    Q(description__icontains=search))
+        elif filter:
+            start_date = timezone.now() - timedelta(days=1)
+            context['posts'] = Post.objects.filter(created__gte=start_date)
         else:
             context['posts'] = Post.objects.all()
 
