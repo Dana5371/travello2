@@ -1,5 +1,5 @@
 from datetime import timedelta
-
+from django.urls import reverse_lazy
 from django.db.models import Q
 from django.forms.models import modelformset_factory
 from django.http import request
@@ -25,6 +25,7 @@ class HomePageView(ListView):
     context_object_name = 'posts'
     paginate_by = 3
 
+    #padination
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
         search = self.request.GET.get('query')
@@ -71,10 +72,9 @@ def post_detail(request, pk):
     return render(request, 'post-detail.html', locals())
 
 
-
 @login_required(login_url='login')
 def add_post(request):
-    ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=5, extra=3)
+    ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=5, extra=4)
     if request.method == 'POST':
         post_form = AddPostForm(request.POST)
         formset = ImageFormSet(request.POST, request.FILES, queryset=Image.objects.none())
@@ -113,11 +113,14 @@ def update_post(request, pk):
 
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    if request == 'POST':
+    if request.method == 'POST':
         post.delete()
-        # messages.add_message(request, messages.SUCCESS, 'You delete your blog')
+        messages.add_message(request, messages.SUCCESS, 'You delete your blog')
         return redirect('homepage')
     return render(request, 'delete-post.html')
+
+
+
 
 
 # comments
