@@ -114,7 +114,7 @@ def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request == 'POST':
         post.delete()
-        messages.add_message(request, messages.SUCCESS, 'You delete your blog')
+        # messages.add_message(request, messages.SUCCESS, 'You delete your blog')
         return redirect('homepage')
     return render(request, 'delete-post.html')
 
