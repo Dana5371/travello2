@@ -7,7 +7,13 @@
 				
 				<!-- Main -->
 					<div id="main">
-
+{% if messeges %}
+<ul class="messeges">
+	{% for messege in messeges %}
+	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+	{% endfor %}
+</ul>
+{% endif %}
 						<!-- Post -->
 							<article class="post">
 								{% for post in posts %}
