@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
+
+
 class HomePageView(ListView):
     model = Post
     template_name = 'index.html'
@@ -24,8 +26,11 @@ class HomePageView(ListView):
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
         search = self.request.GET.get('query')
+        filter = self.request.GET.get('filter')
         if search:
             template_name = 'search.html'
+        elif filter:
+            template_name = 'new.html'
         return template_name
 
     def get_context_data(self, *, object_list=None, **kwargs):

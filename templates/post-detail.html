@@ -95,6 +95,8 @@
       <br/><br/>
     {% else %}
     <a href="{% url 'comment' post.id %}">Add Comment</a>
+      {% endif %}
+    {% if not comment.user.is_authenticated %}
     <br/><br/>
     {% for comment in post.comments.all %}
       <br/><br/>

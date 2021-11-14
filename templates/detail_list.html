@@ -71,7 +71,7 @@
 
           <br>
 
-
+{% for post in posts %}
             <div class="card" style="width: 300px;">
 {% if not category.get_children %}
     {% for post in posts %}
@@ -89,6 +89,8 @@
 </div>
 
 					<br>
+
+            {% endfor %}
 
 
 
