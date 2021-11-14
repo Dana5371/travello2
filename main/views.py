@@ -1,13 +1,10 @@
 from datetime import timedelta
-
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.db.models import Q
 from django.forms.models import modelformset_factory
-from django.http import request
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
-
 from main.models import Comment, Image
 from main.forms import AddPostForm, CommentForm, ImageForm
 from django.views.generic import ListView, DetailView, CreateView
@@ -17,18 +14,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
-
-# Create your views here.
-from .permissions import UserHasPermissionMixin
-
-
 class HomePageView(ListView):
     model = Post
     template_name = 'index.html'
     context_object_name = 'posts'
     paginate_by = 3
 
-    #pagination
+    # pagination
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
         search = self.request.GET.get('query')
@@ -41,7 +33,7 @@ class HomePageView(ListView):
         search = self.request.GET.get('query')
         filter = self.request.GET.get('filter')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
+            context['posts'] = Post.objects.filter(Q(title__icontains=search) |
                                                    Q(description__icontains=search))
         elif filter:
             start_date = timezone.now() - timedelta(days=1)
@@ -56,7 +48,6 @@ class CategoryDetailView(DetailView):
     template_name = 'detail_list.html'
     context_object_name = 'category'
     form = CommentForm
-
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -114,6 +105,7 @@ def update_post(request, pk):
     else:
         return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
 
+
 @login_required(login_url='login')
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -131,9 +123,6 @@ class AddCommentView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('homepage')
     success_message = 'Your comment successfully added to that post!!!'
 
-
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
         return super().form_valid(form)
-
-

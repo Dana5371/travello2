@@ -88,30 +88,37 @@
   {% endif %}
 </div>
 
+					<br>
+
+
+
+
 
 
 <!-- Mini Posts -->
 <!--<section>-->
-<!--  <div class="mini-posts" >-->
-<!--    {% if not category.get_children %}-->
-<!--    {% for post in posts %}-->
-<!--    &lt;!&ndash; Mini Post &ndash;&gt;-->
-<!--      <article class="mini-post" style="margin-top: auto; margin-bottom: auto;">-->
-<!--        <header>-->
-<!--          <h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>-->
-<!--          <p>{{ post.description|truncatewords:10 }}</p>-->
+<!--	<div class="mini-posts" >-->
+<!--		{% if not category.get_children %}-->
+<!--		{% for post in posts %}-->
+<!--		&lt;!&ndash; Mini Post &ndash;&gt;-->
+<!--			<article class="mini-post" style="margin-top: auto; margin-bottom: auto;">-->
+<!--				<header>-->
+<!--					<h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>-->
+<!--					<p>{{ post.description|truncatewords:10 }}</p>-->
 
-<!--          <time class="published" datetime="2015-10-20">{{ post.create }}</time>-->
-<!--          <a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>-->
-<!--        </header>-->
-<!--        <a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>-->
-<!--      </article>-->
-<!--      {% endfor %}-->
-<!--      {% endif %}-->
+<!--					<time class="published" datetime="2015-10-20">{{ post.create }}</time>-->
+<!--					<a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>-->
+<!--				</header>-->
+<!--				<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>-->
+<!--			</article>-->
+<!--			{% endfor %}-->
+<!--			{% endif %}-->
 
 
 
-  </div>
+	</div>
+
+
 </section>
 
       </div>
