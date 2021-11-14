@@ -5,98 +5,98 @@
 
 
 
-					<!-- Main -->
-						<div id="main">
-							<a href="{% url 'update-post' post.id %}"><i class="far fa-edit"></i></a>
-							<a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
-							<!-- Post -->
-								<!-- <article class="post">
-									<header>
-										<div class="title">
-											<h2><a href="#">{{ category }}</a></h2>
-										</div>
+          <!-- Main -->
+            <div id="main">
+              <a href="{% url 'update-post' post.id %}"><i class="far fa-edit"></i></a>
+              <a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
+              <!-- Post -->
+                <!-- <article class="post">
+                  <header>
+                    <div class="title">
+                      <h2><a href="#">{{ category }}</a></h2>
+                    </div>
                                         <-- Main -->
-						<div id="main">
+            <div id="main">
 
-							<!-- Post -->
-								<article class="post">
-									<header>
-										<div class="title">
-											<h2>{{ post.title }}</h2>
-										</div>
-										<div class="meta">
+              <!-- Post -->
+                <article class="post">
+                  <header>
+                    <div class="title">
+                      <h2>{{ post.title }}</h2>
+                    </div>
+                    <div class="meta">
 
-											<p>{{ post.created }}</p>
-											<a href="#" class="author"><span class="name">{{ post.user }}</span><img src="images/avatar.jpg" alt="" /></a>
-										</div>
-									</header>
+                      <p>{{ post.created }}</p>
+                      <a href="#" class="author"><span class="name">{{ post.user }}</span><img src="images/avatar.jpg" alt="" /></a>
+                    </div>
+                  </header>
 
-									<span class="image featured"><img style="width: 550px; height: 600px;" src="{{ post.get_image }}" alt="" /></span>
+                  <span class="image featured"><img style="width: 550px; height: 600px;" src="{{ post.get_image }}" alt="" /></span>
 
 
-									<p>{{ post.description }}</p>
+                  <p>{{ post.description }}</p>
                                     {% for image in images %}
                                     <img style="width: 550px; height: 600px;" src="{{ image  }}" class="img-thumbnail" alt="...">
                                     {% endfor %}
-									<!-- <footer>
-										<ul class="stats">
-											<li><a href="#">General</a></li>
-											<li><a href="#" class="icon solid fa-heart">28</a></li>
-											<li><a href="#" class="icon solid fa-comment">128</a></li>
-										</ul>
-									</footer>
-								</article>
+                  <!-- <footer>
+                    <ul class="stats">
+                      <li><a href="#">General</a></li>
+                      <li><a href="#" class="icon solid fa-heart">28</a></li>
+                      <li><a href="#" class="icon solid fa-comment">128</a></li>
+                    </ul>
+                  </footer>
+                </article>
 
-						</div>
+            </div>
 
-				<div class="row row-cols-1 row-cols-md-3 g-4">
-					{% if not category.get_children %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% if not category.get_children %}
                     {% for child in category.get_children %}
               <div class="col" id="">
                 <div class="card">
                   <img src="{{ child.image.url }}" class="card-img-top" alt="...">
                   <div class="card-body">
-					  <a href="{% url 'category' category.slug %}"><h5 class="card-title">{{ child.name }}</h5></a>
+            <a href="{% url 'category' category.slug %}"><h5 class="card-title">{{ child.name }}</h5></a>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   </div>
                 </div>
-				  {% endfor %}
+          {% endfor %}
                    {% endif %}
-				  </div>
-				  <br>
+          </div>
+          <br>
 
 
 
 <!-- Mini Posts -->
 <section>
-	<div class="mini-posts" >
-		{% if not category.get_children %}
-		{% for post in posts %}
-		<!-- Mini Post -->
-			<article class="mini-post" style="margin-top: auto; margin-bottom: auto;">
-				<header>
-					<h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
-					<p>{{ post.description|truncatewords:10 }}</p>
+  <div class="mini-posts" >
+    {% if not category.get_children %}
+    {% for post in posts %}
+    <!-- Mini Post -->
+      <article class="mini-post" style="margin-top: auto; margin-bottom: auto;">
+        <header>
+          <h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>
+          <p>{{ post.description|truncatewords:10 }}</p>
 
-					<time class="published" datetime="2015-10-20">{{ post.create }}</time>
-					<a href="#" class="author"><img style="width: 250px; :" src="{{ post.get_image }}" alt="" /></a>
-				</header>
-				<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
-			</article>
-			{% endfor %}
-			{% endif %}
-
-
+          <time class="published" datetime="2015-10-20">{{ post.create }}</time>
+          <a href="#" class="author"><img style="width: 250px; :" src="{{ post.get_image }}" alt="" /></a>
+        </header>
+        <a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
+      </article>
+      {% endfor %}
+      {% endif %}
 
 
 
-	</div>
+
+
+  </div>
 </section>
 
 
 
 
-			</div>
-			</body>
+      </div>
+      </body>
 
 {% endblock %}

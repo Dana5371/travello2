@@ -9,7 +9,7 @@ from django.utils import timezone
 from main.models import Comment, Image
 from .forms import AddPostForm, CommentForm, ImageForm
 from django.views.generic import ListView, DetailView
-from main.models import Category, Post
+from .models import Category, Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -25,7 +25,7 @@ class HomePageView(ListView):
     context_object_name = 'posts'
     paginate_by = 3
 
-    #padination
+    #pagination
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
         search = self.request.GET.get('query')
@@ -38,14 +38,13 @@ class HomePageView(ListView):
         search = self.request.GET.get('query')
         filter = self.request.GET.get('filter')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search) |
+            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
                                                    Q(description__icontains=search))
         elif filter:
             start_date = timezone.now() - timedelta(days=1)
             context['posts'] = Post.objects.filter(created__gte=start_date)
         else:
             context['posts'] = Post.objects.all()
-
         return context
 
 
@@ -91,7 +90,7 @@ def add_post(request):
     return render(request, 'add_post.html', locals())
 
 
-
+@login_required(login_url='login')
 def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.user == post.user:
@@ -110,7 +109,7 @@ def update_post(request, pk):
     else:
         return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
 
-
+@login_required(login_url='login')
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':

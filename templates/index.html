@@ -1,4 +1,4 @@
-	{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block content %}
 	<body class="is-preload">
@@ -124,6 +124,7 @@
 								{% if page_obj.has_previous %}
 								<li><a href="{% url 'homepage' %}?page={{ page_obj.previous_page_number }}" class="button large previous">{{ page_obj.previous_page_number }}</a></li>
 								{% endif %}
+								<li><a href="{% url 'homepage' %}?page={{ page_obj.page_number }}" class="button large next">{{ page_obj.page_number }}</a></li>
 								{% if page_obj.has_next %}
 								<li><a href="{% url 'homepage' %}?page={{ page_obj.next_page_number }}" class="button large next">{{ page_obj.next_page_number }}</a></li>
 								{% endif %}
@@ -139,7 +140,7 @@
 								<a href="#" class="logo"><img src="images/logo.jpg" alt="" /></a>
 								<header>
 									<h2>Travello</h2>
-									<p>Ничто так не развивает ум, как путешествие</p>
+									<p>Traveling - it leaves you speechless, then turns you into a storyteller.</p>
 								</header>
 							</section>
 
@@ -196,7 +197,7 @@
 						<!-- About -->
 							<section class="blurb">
 								<h2>About</h2>
-								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
+								<p>Блог о путешествиях, отдыхе и развлечениях. У нас вы найдете ответ на самый главный вопрос: куда и как отправиться отдыхать так, чтобы потом было что вспомнить и о чем рассказать другим. Присоединяйтесь!</p>
 								<ul class="actions">
 									<li><a href="#" class="button">Learn More</a></li>
 								</ul>
