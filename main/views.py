@@ -1,5 +1,7 @@
 from datetime import timedelta
-from django.urls import reverse_lazy
+
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy, reverse
 from django.db.models import Q
 from django.forms.models import modelformset_factory
 from django.http import request
@@ -7,8 +9,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 
 from main.models import Comment, Image
-from .forms import AddPostForm, CommentForm, ImageForm
-from django.views.generic import ListView, DetailView
+from main.forms import AddPostForm, CommentForm, ImageForm
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Category, Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -17,6 +19,7 @@ from django.http import HttpResponse
 
 
 # Create your views here.
+from .permissions import UserHasPermissionMixin
 
 
 class HomePageView(ListView):
@@ -52,6 +55,8 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'detail_list.html'
     context_object_name = 'category'
+    form = CommentForm
+
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -119,27 +124,16 @@ def delete_post(request, pk):
     return render(request, 'delete-post.html')
 
 
+class AddCommentView(SuccessMessageMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'comment.html'
+    success_url = reverse_lazy('homepage')
+    success_message = 'Your comment successfully added to that post!!!'
 
 
-
-# comments
-
-
-def post_list(request):
-    post = Post.objects.filter(moder=True)
-    return render(request, 'post/post.html', locals())
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
 
 
-def one_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    comment = Comment.objects.filter(post=post)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comm = form.save(commit=False)
-            comm.user = request.user
-            comm.post = post
-            comm.save()
-        else:
-            form = CommentForm()
-        return render(request, 'post/post.html', {"post": post, "form": form, "comment": comment})
