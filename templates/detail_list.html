@@ -91,21 +91,7 @@
 					<br>
 
 
-<div class="card" style="width: 300px;">
-{% if not category.get_children %}
-		{% for post in posts %}
-	<a href="{% url 'post-detail' post.id %}" ><img style="width: 250px; height: 300px; margin-left: 25px;" src="{{ post.get_image }}" alt="" /></a>
-  <div class="card-body">
-    <h5 class="card-title">{{ post.title }}</h5>
-    <p class="card-text">{{ post.description|truncatewords:10 }}</p>
-  </div>
 
-  <div class="card-body">
-    <a href="{% url 'post-detail' post.id %}" style="margin-left: 90px;" class="card-link">Learn more</a>
-  </div>
-	{% endfor %}
-  {% endif %}
-</div>
 
 
 
