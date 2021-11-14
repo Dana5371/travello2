@@ -85,15 +85,13 @@
 
 
 								<div class="title">
-
-									<h2><a style="text-decoration: none;" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+									<h2><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
 								</div>
 								<div class="meta">
 									<p>{{ post.created }}</p>
 									{% if post.user %}
 									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
 									{% endif %}
-
 								</div>
 
 
@@ -108,11 +106,7 @@
 								<ul class="actions">
 									<li><a href="{% url 'post-detail' post.id %}" class="button large">Continue Reading</a></li>
 								</ul>
-								<ul class="stats">
-									<li><a href="#">General</a></li>
-									<li><a href="#" class="icon solid fa-heart">28</a></li>
-									<li><a href="#" class="icon solid fa-comment">128</a></li>
-								</ul>
+
 							</footer>
 
 						</article>
@@ -146,53 +140,7 @@
 								</header>
 							</section>
 
-						<!-- Mini Posts -->
-							<section>
-								<div class="mini-posts">
 
-									<!-- Mini Post -->
-										<article class="mini-post">
-											<header>
-												<h3><a href="single.html">Vitae sed condimentum</a></h3>
-												<time class="published" datetime="2015-10-20">October 20, 2015</time>
-												<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>
-										</article>
-
-
-									<!-- Mini Post -->
-										<article class="mini-post">
-											<header>
-												<h3><a href="single.html">Rutrum neque accumsan</a></h3>
-												<time class="published" datetime="2015-10-19">October 19, 2015</time>
-												<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic05.jpg" alt="" /></a>
-										</article>
-
-									<!-- Mini Post -->
-										<article class="mini-post">
-											<header>
-												<h3><a href="single.html">Odio congue mattis</a></h3>
-												<time class="published" datetime="2015-10-18">October 18, 2015</time>
-												<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic06.jpg" alt="" /></a>
-										</article>
-
-									<!-- Mini Post -->
-										<article class="mini-post">
-											<header>
-												<h3><a href="single.html">Enim nisl veroeros</a></h3>
-												<time class="published" datetime="2015-10-17">October 17, 2015</time>
-												<a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
-											</header>
-											<a href="single.html" class="image"><img src="images/pic07.jpg" alt="" /></a>
-										</article>
-
-								</div>
-							</section>
 
 
 

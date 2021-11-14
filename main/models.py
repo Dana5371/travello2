@@ -26,11 +26,24 @@ class Category(models.Model):
 
 
 class Post(models.Model):
+
+    class NewManager(models.Manager):
+        def get_queryset(self):
+            return super().get_queryset().filter(status='published')
+
+    OPTIONS = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
     title = models.CharField(max_length=200)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='places')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='places')
     created = models.DateTimeField()
+    status = models.CharField(max_length=10, choices=OPTIONS, default='draft')
+    favourites = models.ManyToManyField(User, related_name='favourite', default=None, blank=True)
+    objects = models.Manager()
+    newmanager = NewManager()
 
     def __str__(self):
         return self.title
@@ -65,3 +78,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.user} {self.post}'
+
