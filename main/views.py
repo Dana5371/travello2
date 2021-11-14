@@ -9,7 +9,7 @@ from django.utils import timezone
 from main.models import Comment, Image
 from .forms import AddPostForm, CommentForm, ImageForm
 from django.views.generic import ListView, DetailView
-from main.models import Category, Post
+from .models import Category, Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -25,7 +25,7 @@ class HomePageView(ListView):
     context_object_name = 'posts'
     paginate_by = 3
 
-    #padination
+    #pagination
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
         search = self.request.GET.get('query')
@@ -39,7 +39,7 @@ class HomePageView(ListView):
         search = self.request.GET.get('query')
         filter_ = self.request.GET.get('filter')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search) |
+            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
                                                    Q(description__icontains=search))
         elif filter_:
             start_date = timezone.now() - timedelta(days=1)
@@ -144,3 +144,5 @@ def one_post(request, pk):
         else:
             form = CommentForm()
         return render(request, 'post/post.html', {"post": post, "form": form, "comment": comment})
+
+
