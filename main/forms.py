@@ -1,12 +1,18 @@
 from django import forms
-from main.models import Comment, Image, Post, Post
+from main.models import Comment, Image, Post
 from datetime import datetime
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('user', 'comment')
+
+    widgets = {
+        'user': forms.TextInput(attrs={'class': 'form-control'}),
+        'comment': forms.Textarea(attrs={'class': 'form-control'})
+    }
+
 
 class AddPostForm(forms.ModelForm):
     created = forms.DateField(initial=datetime.now().strftime('%Y-%m-%d'))

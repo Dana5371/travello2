@@ -1,22 +1,17 @@
 from datetime import timedelta
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.forms.models import modelformset_factory
-from django.http import request
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
-
 from main.models import Comment, Image
-from .forms import AddPostForm, CommentForm, ImageForm
-from django.views.generic import ListView, DetailView
+from main.forms import AddPostForm, CommentForm, ImageForm
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Category, Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-
-
-
-# Create your views here.
 
 
 class HomePageView(ListView):
@@ -25,11 +20,10 @@ class HomePageView(ListView):
     context_object_name = 'posts'
     paginate_by = 3
 
-    #pagination
+    # pagination
     def get_template_names(self):
         template_name = super(HomePageView, self).get_template_names()
         search = self.request.GET.get('query')
-        filter_ = self.request.GET.get('filter')
         if search:
             template_name = 'search.html'
         return template_name
@@ -37,11 +31,11 @@ class HomePageView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         search = self.request.GET.get('query')
-        filter_ = self.request.GET.get('filter')
+        filter = self.request.GET.get('filter')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
+            context['posts'] = Post.objects.filter(Q(title__icontains=search) |
                                                    Q(description__icontains=search))
-        elif filter_:
+        elif filter:
             start_date = timezone.now() - timedelta(days=1)
             context['posts'] = Post.objects.filter(created__gte=start_date)
         else:
@@ -53,6 +47,7 @@ class CategoryDetailView(DetailView):
     model = Category
     template_name = 'detail_list.html'
     context_object_name = 'category'
+    form = CommentForm
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -110,6 +105,7 @@ def update_post(request, pk):
     else:
         return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
 
+
 @login_required(login_url='login')
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -120,29 +116,13 @@ def delete_post(request, pk):
     return render(request, 'delete-post.html')
 
 
+class AddCommentView(SuccessMessageMixin, CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'comment.html'
+    success_url = reverse_lazy('homepage')
+    success_message = 'Your comment successfully added to that post!!!'
 
-
-
-# comments
-
-
-def post_list(request):
-    post = Post.objects.filter(moder=True)
-    return render(request, 'post/post.html', locals())
-
-
-def one_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    comment = Comment.objects.filter(post=post)
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comm = form.save(commit=False)
-            comm.user = request.user
-            comm.post = post
-            comm.save()
-        else:
-            form = CommentForm()
-        return render(request, 'post/post.html', {"post": post, "form": form, "comment": comment})
-
-
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
