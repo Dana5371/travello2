@@ -8,4 +8,6 @@ urlpatterns = [
     path('login/', SignInView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('profile/', profile, name='profile'),
+    path('favourite/<int:pk>/', favourite_add, name='favourite-add'),
+    path('profile/favourites/', favourite_list, name='favourite-list')
 ]

@@ -123,6 +123,8 @@ class AddCommentView(SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('homepage')
     success_message = 'Your comment successfully added to that post!!!'
 
+
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
         return super().form_valid(form)
+
