@@ -68,12 +68,11 @@ class Image(models.Model):
         return ''
 
 
-
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     comment = models.TextField()
-    created = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
     moderator = models.BooleanField(default=False)
 
     def __str__(self):
