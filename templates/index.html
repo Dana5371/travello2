@@ -90,7 +90,10 @@
 								<div class="meta">
 									<p>{{ post.created }}</p>
 									{% if post.user %}
-									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="" alt="" /></a>
+
+									{% if post.user.image %}
+									<a style="text-decoration: none;" href="" class="author"><span class="name">{{ post.user }}</span><img src="{{ post.user.image.url }}" alt="" /></a>
+									{% endif %}
 									{% endif %}
 								</div>
 
