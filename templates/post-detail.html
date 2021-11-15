@@ -64,6 +64,7 @@
                                     <img style="width: 550px; height: 600px;" src="{{ img }}" class="img-thumbnail" alt="...">
                                     {% endif %}
                                     {% endfor %}
+
                   <!-- <footer>
                     <ul class="stats">
                       <li><a href="#">General</a></li>
@@ -122,7 +123,10 @@
       <br/><br/>
     {% else %}
     <a href="{% url 'comment' post.id %}">Add Comment</a>
+
       {% endif %}
+      <br>
+
     {% if not comment.user.is_authenticated %}
     <br/><br/>
     {% for comment in post.comments.all %}
@@ -139,6 +143,7 @@
     {% endfor %}
     {% endif %}
       <br/>
+
 
 
     <hr>
