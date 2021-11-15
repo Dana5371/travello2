@@ -9,9 +9,9 @@ from django.views.generic import CreateView, DetailView
 from account.forms import RegistrationForm
 from account.models import User
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from main.models import Post
-
+from django.shortcuts import redirect
 
 #favourite
 @login_required
@@ -26,8 +26,12 @@ def favourite_add(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if post.favourites.filter(id=request.user.id).exists():
         post.favourites.remove(request.user)
+        messages.add_message(request, messages.SUCCESS, 'You remove post from favourites')
+        return redirect('homepage')
     else:
         post.favourites.add(request.user)
+        messages.add_message(request, messages.SUCCESS, 'You added post to favourites')
+        return redirect('homepage')
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
