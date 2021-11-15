@@ -50,7 +50,10 @@ class Post(models.Model):
 
 
     def get_image(self):
-        return self.posts.first()
+        if self.posts.first().image:
+            return self.posts.first()
+        else:
+            return False
 
     def get_absolute_url(self):
         from django.urls import reverse

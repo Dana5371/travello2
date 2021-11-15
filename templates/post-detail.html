@@ -6,8 +6,7 @@
 
           <!-- Main -->
             <div id="main">
-              <a href="{% url 'update-post' post.id %}"><i class="far fa-edit"></i></a>
-              <a href="{% url 'delete-post' post.id %}"><i class="far fa-trash-alt"></i></a>
+
               <!-- Post -->
                 <!-- <article class="post">
                   <header>
@@ -30,7 +29,7 @@
                         </div>
 
                         {% else %}
-                        <a href="{% url 'favourite-add' post.id %}" ><i class="fas fa-bookmark"></i></a>
+                        <a href="{% url 'favourite-add' post.id %}" ><i class="fas fa-star"></i></a>
                         {% endif %}
                         {% endif %}
 
@@ -53,13 +52,17 @@
                       <a href="#" class="author"><span class="name">{{ post.user }}</span><img src="images/avatar.jpg" alt="" /></a>
                     </div>
                   </header>
-
-                  <span class="image featured"><img style="width: 550px; height: 600px;" src="{{ post.get_image }}" alt="" /></span>
-
+                    {% if post.get_image %}
+                  <span class="image featured"><img style="width: 550px; height: 600px;" src="{{ post.get_image }}" /></span>
+                    {% endif %}
 
                   <p>{{ post.description }}</p>
-                                    {% for image in images %}
-                                    <img style="width: 550px; height: 600px;" src="{{ image }}" class="img-thumbnail" alt="...">
+
+
+                                    {% for img in images %}
+                                    {% if img.image %}
+                                    <img style="width: 550px; height: 600px;" src="{{ img }}" class="img-thumbnail" alt="...">
+                                    {% endif %}
                                     {% endfor %}
                   <!-- <footer>
                     <ul class="stats">
@@ -140,11 +143,6 @@
 
     <hr>
     <br/><br/>
-
-
-
-
-
 
 
 
