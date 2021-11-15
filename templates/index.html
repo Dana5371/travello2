@@ -143,9 +143,32 @@
 								</header>
 							</section>
 
+<!-- Mini Posts -->
+						<section id="intro">
+								<a href="#" class="logo"><img src="images/logo.jpg" alt="" /></a>
+								<header>
+									<article class="mini-post">
+											<header>
+												 <a style="text-decoration: none;" href="{% url 'homepage' %}?filter=new"><h2>New Posts</h2></a>
+
+											</header>
+										</article>
 
 
+								</header>
+							</section>
+							<section>
+								<div class="mini-posts">
+{% for category in categories %}
+									<!-- Mini Post -->
+										<article class="mini-post">
+											<header>
+												<h3><a href="{% url 'category' category.slug %}">{{ category.name }}</a></h3>
 
+											</header>
+										</article>
+
+{% endfor %}
 
 						<!-- About -->
 							<section class="blurb">
