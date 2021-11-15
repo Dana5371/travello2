@@ -10,6 +10,6 @@ urlpatterns = [
     path('add-post/', add_post, name='add-post'),
     path('update-post/<int:pk>/', update_post, name='update-post'),
     path('delete-post/<int:pk>/', delete_post, name='delete-post'),
-    path('post-detail/<int:pk>/comment', AddCommentView.as_view(), name='comment'),
+    path('post-detail/<int:pk>/comment', one_post, name='comment'),
 
 ]

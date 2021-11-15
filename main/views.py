@@ -71,6 +71,26 @@ def post_detail(request, pk):
 
 
 @login_required(login_url='login')
+def one_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comment = Comment.objects.filter(post=post)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comm = form.save(commit=False)
+            comm.user = request.user
+            comm.comment = post
+            comm.save()
+        else:
+            form = CommentForm()
+        return render(request, 'templates/post-detail.html', {"post": post,
+                                                              "form": form,
+                                                              "comment": comment})
+
+
+
+
+@login_required(login_url='login')
 def add_post(request):
     ImageFormSet = modelformset_factory(Image, form=ImageForm, max_num=5, extra=4)
     if request.method == 'POST':
@@ -124,17 +144,30 @@ def delete_post(request, pk):
         return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
 
 
-class AddCommentView(SuccessMessageMixin, CreateView):
-    model = Comment
-    form_class = CommentForm
-    template_name = 'comment.html'
-    success_url = reverse_lazy('homepage')
-    success_message = 'Your comment successfully added to that post!!!'
-
-    def form_valid(self, form):
-        form.instance.post_id = self.kwargs['pk']
-        return super().form_valid(form)
-
-
+# class AddCommentView(SuccessMessageMixin, CreateView):
+#     model = Comment
+#     form_class = CommentForm
+#     template_name = 'comment.html'
+#     success_url = reverse_lazy('homepage')
+#     success_message = 'Your comment successfully added to that post!!!'
+#
+#     def form_valid(self, form):
+#         form.instance.post_id = self.kwargs['pk']
+#         return super().form_valid(form)
 
 
+# def one_post(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#     comment = CommentPost.objects.filter(post=post)
+#     if request.method == "POST":
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             comm = form.save(commit=False)
+#             comm.user = request.user
+#             comm.post = post
+#             comm.save()
+#         else:
+#             form = CommentForm()
+#         return render(request, 'post/post.html', {"post": post, "form": form, "comment": comment})
+#
+#

@@ -113,6 +113,49 @@
       {% endfor %}
       {% endif %}
 
+
+      <br><br>
+      <h4>Comments</h4>
+{% for comm in comment %}
+{{ comm.user }}<br>
+{{ comm.comment }}<br><br>
+{% endfor %}
+<p>
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Send comment">
+</form>
+</p>
+
+
+<!--<br/><br/>-->
+<!--    <h2>Comments</h2>-->
+<!--    <br/>-->
+<!--    {% if not post.comments.all %}-->
+<!--    No Comments yet...-->
+<!--      <br/><br/>-->
+<!--      <a href="{% url 'comment' post.id %}">Add Comment</a>-->
+<!--      <br/><br/>-->
+<!--    {% else %}-->
+<!--    <a href="{% url 'comment' post.id %}">Add Comment</a>-->
+<!--      {% endif %}-->
+<!--    {% if not comment.user.is_authenticated %}-->
+<!--    <br/><br/>-->
+<!--    {% for comment in post.comments.all %}-->
+<!--      <br/><br/>-->
+<!--    <strong>-->
+<!--      {{ comment.user }}-->
+<!--    </strong>-->
+<!--      {{ comment.created }}-->
+<!--    <br/>-->
+
+<!--    {{ comment.comment }}-->
+<!--    <br/>-->
+
+<!--    {% endfor %}-->
+<!--    {% endif %}-->
+
 <br/><br/>
     <h2>Comments</h2>
     <br/>
@@ -142,6 +185,7 @@
 
     {% endfor %}
     {% endif %}
+
       <br/>
 
 
