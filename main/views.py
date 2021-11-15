@@ -14,8 +14,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
-
-
 class HomePageView(ListView):
     model = Post
     template_name = 'index.html'
@@ -38,7 +36,7 @@ class HomePageView(ListView):
         search = self.request.GET.get('query')
         filter = self.request.GET.get('filter')
         if search:
-            context['posts'] = Post.objects.filter(Q(title__icontains=search) |
+            context['posts'] = Post.objects.filter(Q(title__icontains=search)|
                                                    Q(description__icontains=search))
         elif filter:
             start_date = timezone.now() - timedelta(days=1)
@@ -79,7 +77,9 @@ def add_post(request):
         post_form = AddPostForm(request.POST)
         formset = ImageFormSet(request.POST, request.FILES, queryset=Image.objects.none())
         if post_form.is_valid() and formset.is_valid():
-            post = post_form.save()
+            post = post_form.save(commit=False)
+            post.user = request.user
+            post.save()
             for form in formset.cleaned_data:
                 image = form['image']
 
@@ -131,3 +131,4 @@ class AddCommentView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
         return super().form_valid(form)
+

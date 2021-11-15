@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-
-
-
 <div class="card mb-3" style="max-width: 1540px; ">
-  {% if posts %}
     {% for post in posts %}
   <div class="row g-0">
 
     <div class="col-md-4">
+
 
       <img src="{{ post.get_image }}" class="img-fluid rounded-start" alt="..." style="width: 250px: height:250px;">
     </div>
@@ -26,10 +22,7 @@
     </div>
   </div>
     {% endfor %}
-  {% endif %}
-
 </div>
-
 
 
 
@@ -52,6 +45,7 @@
 <!--    </a>-->
 
 <!--{% endfor %}-->
+
 
 
 

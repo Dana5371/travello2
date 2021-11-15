@@ -71,10 +71,13 @@
 
           <br>
 
-{% for post in posts %}
-            <div class="card" style="width: 300px;">
-{% if not category.get_children %}
-    {% for post in posts %}
+
+
+          {% if not category.get_children %}
+          {% for post in posts %}
+            <div class="card"  style="width: 300px;">
+
+
   <a href="{% url 'post-detail' post.id %}" ><img style="width: 250px; height: 300px; margin-left: 25px;" src="{{ post.get_image }}" alt="" /></a>
   <div class="card-body">
     <h5 class="card-title">{{ post.title }}</h5>
@@ -84,43 +87,38 @@
   <div class="card-body">
     <a href="{% url 'post-detail' post.id %}" style="margin-left: 90px;" class="card-link">Learn more</a>
   </div>
-  {% endfor %}
-  {% endif %}
-</div>
-
-					<br>
-
-            {% endfor %}
 
 
-
+</div><br>
+{% endfor %}
+<br>
+<br>
+{% endif %}
 
 
 
 <!-- Mini Posts -->
 <!--<section>-->
-<!--	<div class="mini-posts" >-->
-<!--		{% if not category.get_children %}-->
-<!--		{% for post in posts %}-->
-<!--		&lt;!&ndash; Mini Post &ndash;&gt;-->
-<!--			<article class="mini-post" style="margin-top: auto; margin-bottom: auto;">-->
-<!--				<header>-->
-<!--					<h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>-->
-<!--					<p>{{ post.description|truncatewords:10 }}</p>-->
+<!--  <div class="mini-posts" >-->
+<!--    {% if not category.get_children %}-->
+<!--    {% for post in posts %}-->
+<!--    &lt;!&ndash; Mini Post &ndash;&gt;-->
+<!--      <article class="mini-post" style="margin-top: auto; margin-bottom: auto;">-->
+<!--        <header>-->
+<!--          <h3><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h3>-->
+<!--          <p>{{ post.description|truncatewords:10 }}</p>-->
 
-<!--					<time class="published" datetime="2015-10-20">{{ post.create }}</time>-->
-<!--					<a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>-->
-<!--				</header>-->
-<!--				<a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>-->
-<!--			</article>-->
-<!--			{% endfor %}-->
-<!--			{% endif %}-->
-
-
-
-	</div>
+<!--          <time class="published" datetime="2015-10-20">{{ post.create }}</time>-->
+<!--          <a href="#" class="author"><img src="{{ post.get_image }}" alt="" /></a>-->
+<!--        </header>-->
+<!--        <a href="single.html" class="image"><img src="images/pic04.jpg" alt="" /></a>-->
+<!--      </article>-->
+<!--      {% endfor %}-->
+<!--      {% endif %}-->
 
 
+
+  </div>
 </section>
 
       </div>

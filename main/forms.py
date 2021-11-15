@@ -18,7 +18,7 @@ class AddPostForm(forms.ModelForm):
     created = forms.DateField(initial=datetime.now().strftime('%Y-%m-%d'))
     class Meta:
         model = Post
-        fields = '__all__'
+        exclude = ('user',)
 
 
 class ImageForm(forms.ModelForm):
