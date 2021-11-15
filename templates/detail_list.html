@@ -73,28 +73,67 @@
 
 
 
-          {% if not category.get_children %}
-          {% for post in posts %}
-            <div class="card"  style="width: 300px;">
+<!--          {% if not category.get_children %}-->
+<!--          {% for post in posts %}-->
+<!--            <div class="card"  style="width: 300px;">-->
 
 
-  <a href="{% url 'post-detail' post.id %}" ><img style="width: 250px; height: 300px; margin-left: 25px;" src="{{ post.get_image }}" alt="" /></a>
-  <div class="card-body">
-    <h5 class="card-title">{{ post.title }}</h5>
-    <p class="card-text">{{ post.description|truncatewords:10 }}</p>
+<!--  <a href="{% url 'post-detail' post.id %}" ><img style="width: 250px; height: 300px; margin-left: 25px;" src="{{ post.get_image }}" alt="" /></a>-->
+<!--  <div class="card-body">-->
+<!--    <h5 class="card-title">{{ post.title }}</h5>-->
+<!--    <p class="card-text">{{ post.description|truncatewords:10 }}</p>-->
+<!--  </div>-->
+
+<!--  <div class="card-body">-->
+<!--    <a href="{% url 'post-detail' post.id %}" style="margin-left: 90px;" class="card-link">Learn more</a>-->
+<!--  </div>-->
+
+
+<!--</div><br>-->
+<!--{% endfor %}-->
+<!--<br>-->
+<!--<br>-->
+<!--{% endif %}-->
+
+
+
+<!--{% if not category.get_children %}-->
+<!--                 {% for post in posts %}-->
+<!--            <div class="row row-cols-1 row-cols-md-3 g-4">-->
+
+<!--  <div class="col">-->
+<!--    <div class="card h-100">-->
+<!--        <a href="{% url 'post-detail' post.id %}"><img src="{{ post.get_image }}" class="card-img-top" alt="..."></a>-->
+<!--      <div class="card-body">-->
+<!--       <a href="{% url 'post-detail' post.id %}" style="text-decoration: none"><h5 class="card-title">{{ post.title }}</h5></a>-->
+<!--        <p class="card-text">{{ post.description|truncatewords:10 }}</p>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--{% endfor %}-->
+<!--      {% endif %}-->
+
+
+            {% if not category.get_children %}
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for post in posts %}
+  <div class="col">
+    <div class="card">
+        {% if post.get_image %}
+        <a href="{% url 'post-detail' post.id %}"><img style="width: 250px; height: 350px; margin-left: 80px;" src="{{ post.get_image }}" class="card-img-top" alt="..."></a>
+        {% else %}
+        <img style="width: 250px; height: 350px;" src="" class="card-img-top" alt="...">
+          {% endif %}
+        <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.description|truncatewords:10 }}</p>
+            <a class="btn btn-danger" href="{% url 'post-detail' post.id %}" role="button">View more</a>
+      </div>
+    </div>
   </div>
-
-  <div class="card-body">
-    <a href="{% url 'post-detail' post.id %}" style="margin-left: 90px;" class="card-link">Learn more</a>
-  </div>
-
-
-</div><br>
-{% endfor %}
-<br>
-<br>
+    {% endfor %}
 {% endif %}
-
 
 
 <!-- Mini Posts -->
