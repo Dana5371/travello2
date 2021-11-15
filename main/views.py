@@ -114,11 +114,14 @@ def update_post(request, pk):
 @login_required(login_url='login')
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    if request.method == 'POST':
-        post.delete()
-        messages.add_message(request, messages.SUCCESS, 'You delete your blog')
-        return redirect('homepage')
-    return render(request, 'delete-post.html')
+    if request.user == post.user:
+        if request.method == 'POST':
+            post.delete()
+            messages.add_message(request, messages.SUCCESS, 'You delete your blog')
+            return redirect('homepage')
+        return render(request, 'delete-post.html')
+    else:
+        return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
 
 
 class AddCommentView(SuccessMessageMixin, CreateView):
@@ -131,4 +134,7 @@ class AddCommentView(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
         return super().form_valid(form)
+
+
+
 
