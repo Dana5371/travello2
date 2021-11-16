@@ -154,6 +154,12 @@
   <br/><br/>
 
 
+    <form action="{% url 'like_post' post.id %}" method="POST">
+  {% csrf_token %}
+  {{ post.get_total_likes }} <button type="submit" name='post_id' value="{{ post.id }}"><i class="fas fa-heart"></i></button>
+    </form>
+
+
 </section>
 
 

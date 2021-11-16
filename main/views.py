@@ -11,7 +11,7 @@ from django.views.generic import ListView, DetailView, CreateView
 from .models import Category, Post
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 class HomePageView(ListView):
@@ -67,6 +67,7 @@ def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     image = post.get_image
     images = post.posts.exclude(image=image)
+    total_likes = post.get_total_likes()
     return render(request, 'post-detail.html', locals())
 
 
@@ -141,6 +142,12 @@ def delete_post(request, pk):
         return render(request, 'delete-post.html')
     else:
         return HttpResponse('<h1>Вы не являетесь создателем этого поста!!!<h1>')
+
+
+def LikeView(request, pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(reverse_lazy('post-detail', args=[str(pk)]))
 
 
 
