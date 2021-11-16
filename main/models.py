@@ -38,6 +38,7 @@ class Post(models.Model):
     created = models.DateTimeField()
     status = models.CharField(max_length=10, choices=OPTIONS, default='draft')
     favourites = models.ManyToManyField(User, related_name='favourite', default=None, blank=True)
+    likes = models.ManyToManyField(User, related_name='likes')
     objects = models.Manager()
     newmanager = NewManager()
 
@@ -53,6 +54,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+    def get_total_likes(self):
+        return self.likes.count()
 
 
 class Image(models.Model):
