@@ -21,10 +21,6 @@ class Category(models.Model):
         return False
 
 
-
-
-
-
 class Post(models.Model):
 
     class NewManager(models.Manager):
@@ -48,7 +44,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-
     def get_image(self):
         if self.posts.first().image:
             return self.posts.first()
@@ -64,19 +59,23 @@ class Image(models.Model):
     image = models.ImageField(upload_to='posts', blank=True, null=True)
     posts = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='posts')
 
-
     def __str__(self):
         if self.image:
             return self.image.url
         return ''
 
 
-class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    comment = models.TextField()
+class CommentPost(models.Model):
+    class Meta:
+        db_table = 'comments'
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    text = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    moderator = models.BooleanField(default=False)
+    moder = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.user} {self.post}'
