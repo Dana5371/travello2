@@ -78,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'travello2.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
